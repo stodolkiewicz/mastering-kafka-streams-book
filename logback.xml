@@ -1,0 +1,29 @@
+<configuration>
+
+    <!-- Ta część definiuje, JAK mają wyglądać logi w konsoli (Appender) -->
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <!-- Definiuje format wiadomości: czas, poziom, wątek, logger, wiadomość, nowa linia -->
+            <pattern>%d{YYYY-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!--
+    Ustaw domyślny, globalny poziom logowania.
+    "INFO" to dobry punkt startowy. Pokazuje ważne zdarzenia, ale bez zalewu szczegółów.
+    Inne poziomy: TRACE, DEBUG, WARN, ERROR
+    -->
+    <root level="WARN">
+        <appender-ref ref="STDOUT" />
+    </root>
+
+    <!--
+    Możemy dostosować poziom logowania dla konkretnych bibliotek.
+    To jest BARDZO przydatne do debugowania!
+    Poniższy przykład sprawia, że logi z Kafki są mniej "gadatliwe",
+    pokazując tylko ostrzeżenia i błędy, a nie wszystkie komunikaty INFO.
+    -->
+    <logger name="org.apache.kafka" level="WARN"/>
+    <logger name="org.apache.kafka.streams" level="WARN"/>
+
+</configuration>

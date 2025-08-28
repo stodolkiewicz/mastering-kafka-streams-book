@@ -7,6 +7,7 @@ import org.apache.kafka.streams.StreamsBuilder;
 import org.apache.kafka.streams.StreamsConfig;
 import org.apache.kafka.streams.Topology;
 import org.apache.kafka.streams.kstream.KStream;
+import org.apache.kafka.streams.kstream.Produced;
 
 import java.time.Duration;
 import java.util.Properties;
@@ -29,12 +30,7 @@ public class App
         config.put(StreamsConfig.DEFAULT_VALUE_SERDE_CLASS_CONFIG, Serdes.String().getClass());
 
         // KSTREAM & TOPOLOGY ---------------------------------------------------------------------
-        StreamsBuilder builder = new StreamsBuilder();
-        KStream<Void, String> stream = builder.stream("users");
-
-        stream
-                .foreach((k, v) -> System.out.println("(DSL) Hello, " + v));
-        Topology topology = builder.build();
+        Topology topology = createTopology();
 
         // START ---------------------------------------------------------------------------------
         try (KafkaStreams kafkaStreams = new KafkaStreams(topology, config);) {
@@ -53,5 +49,19 @@ public class App
             }
         }
         System.exit(0);
+    }
+
+    public static Topology createTopology() {
+        StreamsBuilder builder = new StreamsBuilder();
+        KStream<Void, String> stream = builder.stream("users");
+
+        stream
+                .mapValues(value -> "Hello " + value + "!")
+                .peek((k, v) -> System.out.println(v))
+                .to("outputTopic", Produced.with(Serdes.Void(), Serdes.String()));
+
+        Topology topology = builder.build();
+
+        return topology;
     }
 }
