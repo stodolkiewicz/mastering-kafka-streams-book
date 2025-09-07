@@ -19,7 +19,8 @@ public class StatefulTopology {
                 "score-events",
                 Consumed.with(Serdes.ByteArray(), new JsonSerDes<>(ScoreEvent.class))
         )
-        .selectKey((k,v) -> v.getPlayerId().toString());
+        .selectKey((k,v) -> v.getPlayerId().toString())
+        .peek((key, value) -> System.out.println(">>> Etap 1 (scoreEvents): key=" + key + ", value=" + value));
 
         KTable<String, Player> players = builder.table(
                 "players",
@@ -40,7 +41,7 @@ public class StatefulTopology {
                 players,
                 scorePlayerJoiner,
                 playerJoinParams
-        );
+        ).peek((key, value) -> System.out.println(">>> Etap 2 (po joinie z players): key=" + key + ", value=" + value));;
 
         // join products -------------------------------------------------------------------------------------------
         KeyValueMapper<String, ScoreWithPlayer, String> keyMapper = (leftKey, scorePlayer) -> {
@@ -54,7 +55,8 @@ public class StatefulTopology {
                 products,
                 keyMapper,
                 productJoiner
-        );
+        )
+        .peek((key, value) -> System.out.println(">>> Etap 3 (po joinie z products): key=" + key + ", value=" + value));;
 
         // groupBy records -----------------------------------------------------------------------------------------
 
@@ -66,6 +68,7 @@ public class StatefulTopology {
                 (key, enriched) -> enriched.getProductId().toString(), // selecting key here
                 Grouped.with(Serdes.String(), new JsonSerDes<>(Enriched.class))
         );
+
         // KGroupedStream is just an intermediate
         // representation of a stream that allows us to perform aggregations.
 
@@ -96,6 +99,11 @@ public class StatefulTopology {
                     .withValueSerde(new JsonSerDes<>(HighScores.class))
         );
 
+        // DEBUG --------
+        highScores.toStream()
+                .peek((key, value) -> System.out.println(">>> Etap 4 highScores: key=" + key + ", value=" + value));;
+        //-----------------
+
         // table aggregation ---
         KGroupedTable<String, Player> groupedPlayers =
                 players.groupBy(
@@ -103,10 +111,18 @@ public class StatefulTopology {
                         Grouped.with(Serdes.String(), new JsonSerDes<>(Player.class))
                 );
 
-        groupedPlayers.aggregate(
+        KTable<String, Long> aggregatedPlayers = groupedPlayers.aggregate(
                 () -> 0L,
                 (key, value, aggregate) -> aggregate + 1L,
-                (key, value, aggregate) -> aggregate - 1L);
+                (key, value, aggregate) -> aggregate - 1L,
+                Materialized.<String, Long, KeyValueStore<Bytes, byte[]>>as("player-counts")
+                        .withKeySerde(Serdes.String())
+                        .withValueSerde(Serdes.Long()) // <-- Mówimy, że wartość to Long
+        );
+        // DEBUG --------
+        aggregatedPlayers.toStream()
+                .peek((key, value) -> System.out.println(">>> Etap 5 aggregatedPlayers: key=" + key + ", value=" + value));;
+        //-----------------
 
 
         return builder.build();

@@ -29,4 +29,11 @@ public class HighScores {
 
         return playerScores;
     }
+
+    @Override
+    public String toString() {
+        return "HighScores{" +
+                "highScores=" + highScores +
+                '}';
+    }
 }

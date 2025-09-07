@@ -59,4 +59,15 @@ public class Enriched implements Comparable<Enriched> {
     public int compareTo(Enriched o) {
         return Double.compare(o.score, score);
     }
+
+    @Override
+    public String toString() {
+        return "Enriched{" +
+                "playerId=" + playerId +
+                ", productId=" + productId +
+                ", playerName='" + playerName + '\'' +
+                ", gameName='" + gameName + '\'' +
+                ", score=" + score +
+                '}';
+    }
 }

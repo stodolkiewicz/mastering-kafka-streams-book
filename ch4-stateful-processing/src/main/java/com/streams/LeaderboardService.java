@@ -39,7 +39,8 @@ public class LeaderboardService {
 
     void start() {
         Javalin app = Javalin.create().start(hostInfo.port());
-        app.get("/leaderboard/:key", this::getKey);
+        System.out.println(hostInfo.port());
+        app.get("/leaderboard/{key}", this::getKey);
     }
 
     void getKey(Context context) {
@@ -71,6 +72,8 @@ public class LeaderboardService {
 
         String url = String.format("http://%s:%d/leaderboard/%s",
                 remoteHost, remotePort, productId);
+
+        System.out.println("URL: " + url);
 
         OkHttpClient okHttpClient = new OkHttpClient();
         Request request = new Request.Builder().url(url).build();

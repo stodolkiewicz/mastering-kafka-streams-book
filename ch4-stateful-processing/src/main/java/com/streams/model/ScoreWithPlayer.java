@@ -24,4 +24,12 @@ public class ScoreWithPlayer {
     public void setPlayer(Player player) {
         this.player = player;
     }
+
+    @Override
+    public String toString() {
+        return "ScoreWithPlayer{" +
+                "scoreEvent=" + scoreEvent +
+                ", player=" + player +
+                '}';
+    }
 }
