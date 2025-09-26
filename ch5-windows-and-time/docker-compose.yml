@@ -92,9 +92,9 @@ services:
       kafka-topics --bootstrap-server kafka:19092 --list
 
       echo -e 'Creating kafka topics'
-      kafka-topics --bootstrap-server kafka:19092 --create --if-not-exists --topic players --replication-factor 1 --partitions 2
-      kafka-topics --bootstrap-server kafka:19092 --create --if-not-exists --topic products --replication-factor 1 --partitions 2
-      kafka-topics --bootstrap-server kafka:19092 --create --if-not-exists --topic score-events --replication-factor 1 --partitions 2
+      kafka-topics --bootstrap-server kafka:19092 --create --if-not-exists --topic pulse-events --replication-factor 1 --partitions 2
+      kafka-topics --bootstrap-server kafka:19092 --create --if-not-exists --topic body-temp-events --replication-factor 1 --partitions 2
+      kafka-topics --bootstrap-server kafka:19092 --create --if-not-exists --topic alerts --replication-factor 1 --partitions 2
       
       echo -e 'Successfully created the following topics:'
       kafka-topics --bootstrap-server kafka:19092 --list

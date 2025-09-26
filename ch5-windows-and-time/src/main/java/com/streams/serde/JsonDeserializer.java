@@ -1,4 +1,4 @@
-package com.streams;
+package com.streams.serde;
 
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;

@@ -1,7 +1,5 @@
-package com.streams;
+package com.streams.serde;
 
-import com.streams.serde.JsonDeserializer;
-import com.streams.serde.JsonSerializer;
 import org.apache.kafka.common.serialization.Deserializer;
 import org.apache.kafka.common.serialization.Serde;
 import org.apache.kafka.common.serialization.Serializer;
