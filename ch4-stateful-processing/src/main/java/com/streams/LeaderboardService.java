@@ -40,7 +40,9 @@ public class LeaderboardService {
     void start() {
         Javalin app = Javalin.create().start(hostInfo.port());
         System.out.println(hostInfo.port());
+        app.get("/leaderboard/count", this::getCount);
         app.get("/leaderboard/{key}", this::getKey);
+
     }
 
     void getKey(Context context) {
