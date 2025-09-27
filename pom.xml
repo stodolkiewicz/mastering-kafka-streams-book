@@ -12,7 +12,7 @@
     <module>ch3-stateless-processing</module>
     <module>ch4-stateful-processing</module>
     <module>ch5-windows-and-time</module>
-    <module>ch6-advanced-state-management</module>
+    <module>tests</module>
   </modules>
 
   <name>my-kafka-streams</name>
