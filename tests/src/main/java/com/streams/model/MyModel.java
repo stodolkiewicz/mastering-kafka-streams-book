@@ -94,4 +94,18 @@ public class MyModel {
     public int hashCode() {
         return Objects.hash(name, intField, doubleField, booleanField, myEnumField, stringList, stringIntegerMap, nested);
     }
+
+    @Override
+    public String toString() {
+        return "MyModel{" +
+                "name='" + name + '\'' +
+                ",\n intField=" + intField +
+                ",\n doubleField=" + doubleField +
+                ",\n booleanField=" + booleanField +
+                ",\n myEnumField=" + myEnumField +
+                ",\n stringList=" + stringList +
+                ",\n stringIntegerMap=" + stringIntegerMap +
+                ",\n nested=" + nested +
+                '}';
+    }
 }

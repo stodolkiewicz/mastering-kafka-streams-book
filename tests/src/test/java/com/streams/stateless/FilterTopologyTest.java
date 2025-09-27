@@ -16,6 +16,11 @@ import java.util.Properties;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
+/*
+ * Tests FilterTopology method: filter()
+ * 
+ * filter() - keeps or drops records based on predicate, doesn't modify data
+ */
 class FilterTopologyTest {
     private TopologyTestDriver testDriver;
     private TestInputTopic<String, MyModel> inputTopic;
@@ -56,7 +61,7 @@ class FilterTopologyTest {
         myModel.setIntField(11);
 
         // when
-        inputTopic.pipeInput(myModel);
+        inputTopic.pipeInput("key-1", myModel);
 
         // then
         assertThat(outputTopic.isEmpty()).isFalse();
