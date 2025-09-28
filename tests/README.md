@@ -22,7 +22,7 @@ https://kafka.apache.org/documentation/streams/developer-guide/dsl-api.html
 - **Repartitioning:** Zmiana klucza powoduje repartitioning dla downstream operacji.
 - **Null Safety:** Obsługa przypadków gdy wartość jest null lub pusta.
 
-### `flatMap / flatMapValues` ❌ TODO
+### `flatMap / flatMapValues` ✅ DONE
 - **Jeden-do-Wielu:** Jedna wiadomość wejściowa generuje poprawną liczbę (więcej niż jedną) wiadomości wyjściowych.
 - **Jeden-do-Zera:** Jedna wiadomość wejściowa nie generuje żadnej wiadomości wyjściowej.
 
