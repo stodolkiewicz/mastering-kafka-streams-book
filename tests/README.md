@@ -1,3 +1,7 @@
+# Documentation
+Streams DSL  
+https://kafka.apache.org/documentation/streams/developer-guide/dsl-api.html
+
 # Scenariusze Testów dla Kafka Streams
 
 ## I. Operacje Bezstanowe (Stateless)
