@@ -7,39 +7,62 @@ https://kafka.apache.org/documentation/streams/developer-guide/dsl-api.html
 ## I. Operacje Bezstanowe (Stateless)
 **Cel:** Weryfikacja, czy pojedyncza wiadomość jest poprawnie transformowana, filtrowana lub przekierowywana, bez zależności od poprzednich wiadomości.
 
-### `filter / filterNot`
+### `filter / filterNot` ✅ DONE
 - **Test Pozytywny:** Wiadomość spełniająca warunek przechodzi dalej.
 - **Test Negatywny:** Wiadomość niespełniająca warunku jest odrzucana.
 - **Test Graniczny:** Dla warunku `value > 100`, przetestuj dla wartości `99`, `100` i `101`.
 
-### `map / mapValues`
+### `map / mapValues` ✅ DONE
 - **Transformacja Wartości:** Wartość wiadomości jest poprawnie zmieniana.
 - **Transformacja Klucza (`map`):** Klucz wiadomości jest poprawnie zmieniany (i weryfikacja konsekwencji, np. dla późniejszej agregacji).
 - **Transformacja Typu:** Typ obiektu w wiadomości jest poprawnie konwertowany.
 
-### `flatMap / flatMapValues`
+### `selectKey` ❌ TODO
+- **Zmiana Klucza:** Klucz jest poprawnie zmieniany na podstawie wartości rekordu.
+- **Repartitioning:** Zmiana klucza powoduje repartitioning dla downstream operacji.
+- **Null Safety:** Obsługa przypadków gdy wartość jest null lub pusta.
+
+### `flatMap / flatMapValues` ❌ TODO
 - **Jeden-do-Wielu:** Jedna wiadomość wejściowa generuje poprawną liczbę (więcej niż jedną) wiadomości wyjściowych.
 - **Jeden-do-Zera:** Jedna wiadomość wejściowa nie generuje żadnej wiadomości wyjściowej.
 
-### `branch`
+### `branch` ✅ DONE
 - **Poprawne Rozgałęzienie:** Wiadomości trafiają do właściwych strumieni na podstawie zdefiniowanych predykatów.
 - **Brak Dopasowania:** Wiadomość, która nie pasuje do żadnego predykatu, jest poprawnie odrzucana.
+
+### `merge` ✅ DONE
+- **Łączenie Streamów:** Multiple streams są poprawnie łączone w jeden.
+- **Zachowanie Kolejności:** Rekordy zachowują czasową kolejność po merge.
+
+### `TopicNameExtractor` ✅ DONE
+- **Dynamic Routing:** Rekordy są kierowane do różnych topicó w zależności od content.
+- **Topic Auto-Creation:** Kafka Streams tworzy topici jeśli nie istnieją.
 
 ---
 
 ## II. Operacje Stanowe (Stateful)
 **Cel:** Weryfikacja, czy agregacje i aktualizacje stanu działają poprawnie w miarę napływania kolejnych wiadomości.
 
-### `count`
+### Grupowanie danych
+### `groupByKey` ❌ TODO
+- **Zachowanie Klucza:** Grupowanie zachowuje istniejący klucz rekordu.
+- **Przygotowanie do Agregacji:** Umożliwia operacje jak count(), reduce(), aggregate().
+
+### `groupBy` ❌ TODO
+- **Nowy Klucz:** Grupowanie na podstawie nowego klucza z wartości.
+- **Repartitioning:** Automatyczne repartitioning gdy klucz się zmienia.
+
+### Agregacje
+### `count` ❌ TODO
 - **Inicjalizacja:** Pierwsza wiadomość dla danego klucza daje wynik `1`.
 - **Inkrementacja:** Kolejne wiadomości dla tego samego klucza poprawnie zwiększają licznik.
 - **Niezależność Kluczy:** Liczniki dla różnych kluczy są od siebie niezależne.
 
-### `reduce`
+### `reduce` ❌ TODO
 - **Inicjalizacja:** Pierwsza wiadomość poprawnie inicjuje stan agregacji.
 - **Redukcja:** Kolejne wiadomości poprawnie modyfikują stan zgodnie z logiką Reducer.
 
-### `aggregate`
+### `aggregate` ❌ TODO
 - **Initializer:** Pierwsza wiadomość dla klucza poprawnie wywołuje Initializer.
 - **Aggregator:** Kolejne wiadomości poprawnie aktualizują agregat za pomocą Aggregator.
 
@@ -67,7 +90,30 @@ Kluczowe jest użycie `TopologyTestDriver.advanceWallClockTime()` do symulowania
 
 ---
 
-## IV. Złączenia (Joins)
+## IV. KTable i GlobalKTable
+**Cel:** Zrozumienie abstrakcji tabeli jako strumienia zmian i globalnego stanu.
+
+### KTable ❌ TODO
+- **Upsert Semantics:** Nowy rekord z tym samym kluczem nadpisuje poprzedni.
+- **Tombstone Handling:** null value usuwa klucz z tabeli.
+- **toStream():** Konwersja KTable → KStream emituje changelog events.
+- **State Query:** Odczyt aktualnego stanu przez getStateStore().
+
+### GlobalKTable ❌ TODO  
+- **Full Replication:** Każda instancja aplikacji ma pełną kopię danych.
+- **No Partitioning:** Nie ma ograniczeń co-partitioning dla joinów.
+- **Bootstrap:** Tabela jest w pełni załadowana przed rozpoczęciem przetwarzania.
+- **Join with Any Key:** Join KStream z GlobalKTable na dowolnym kluczu.
+
+### KTable Operations ❌ TODO
+- **filter():** Filtrowanie rekordów w tabeli.
+- **mapValues():** Transformacja wartości w tabeli.
+- **join():** KTable-KTable join (inner/left/outer).
+- **aggregate():** Agregacja wartości grupowanych kluczy.
+
+---
+
+## V. Złączenia (Joins)
 **Cel:** Weryfikacja logiki łączenia strumieni i wzbogacania danych, zarówno w oknach czasowych, jak i z tabelami.
 
 ### KStream–KStream Join (Windowed)
