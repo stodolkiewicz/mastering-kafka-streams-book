@@ -1,8 +1,9 @@
-package com.streams.stateless;
+package com.streams.stateless.branching;
 
 import com.streams.model.MyModel;
 import com.streams.serde.JsonDeserializer;
 import com.streams.serde.JsonSerializer;
+import com.streams.stateless.branching.BranchingTopology;
 import org.apache.kafka.common.serialization.Serdes;
 import org.apache.kafka.streams.*;
 import org.apache.kafka.streams.test.TestRecord;

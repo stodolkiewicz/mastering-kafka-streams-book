@@ -1,4 +1,4 @@
-package com.streams.stateless;
+package com.streams.stateless.branching;
 
 import com.streams.model.MyModel;
 import com.streams.serde.JsonSerDes;
