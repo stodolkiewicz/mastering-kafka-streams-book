@@ -17,7 +17,7 @@ https://kafka.apache.org/documentation/streams/developer-guide/dsl-api.html
 - **Transformacja Klucza (`map`):** Klucz wiadomości jest poprawnie zmieniany (i weryfikacja konsekwencji, np. dla późniejszej agregacji).
 - **Transformacja Typu:** Typ obiektu w wiadomości jest poprawnie konwertowany.
 
-### `selectKey` ❌ TODO
+### `selectKey` ✅ DONE
 - **Zmiana Klucza:** Klucz jest poprawnie zmieniany na podstawie wartości rekordu.
 - **Repartitioning:** Zmiana klucza powoduje repartitioning dla downstream operacji.
 - **Null Safety:** Obsługa przypadków gdy wartość jest null lub pusta.
