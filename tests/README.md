@@ -44,7 +44,7 @@ https://kafka.apache.org/documentation/streams/developer-guide/dsl-api.html
 **Cel:** Weryfikacja, czy agregacje i aktualizacje stanu działają poprawnie w miarę napływania kolejnych wiadomości.
 
 ### Grupowanie danych
-### `groupByKey` ❌ TODO
+### `groupByKey` ✅ DONE
 - **Zachowanie Klucza:** Grupowanie zachowuje istniejący klucz rekordu.
 - **Przygotowanie do Agregacji:** Umożliwia operacje jak count(), reduce(), aggregate().
 
@@ -53,7 +53,7 @@ https://kafka.apache.org/documentation/streams/developer-guide/dsl-api.html
 - **Repartitioning:** Automatyczne repartitioning gdy klucz się zmienia.
 
 ### Agregacje
-### `count` ❌ TODO
+### `count` ✅ DONE
 - **Inicjalizacja:** Pierwsza wiadomość dla danego klucza daje wynik `1`.
 - **Inkrementacja:** Kolejne wiadomości dla tego samego klucza poprawnie zwiększają licznik.
 - **Niezależność Kluczy:** Liczniki dla różnych kluczy są od siebie niezależne.
@@ -161,11 +161,6 @@ Te testy uczą interakcji z niższymi warstwami API i semantyki platformy.
   `driver.getWindowStore("nazwa-sklepu").fetch(klucz, od, do)`  
   → sprawdzenie stanu dla konkretnego okna czasowego.
 
-### Processor API (PAPI) – Niski Poziom
-- **Testowanie Własnego Procesora:**
-    - `process()` jest wywoływana.
-    - `context.forward()` poprawnie przekazuje wiadomość dalej.
-    - Własne `State Store` działają poprawnie.
 
 ### Semantyka KTable (Strumień Zmian)
 - **Test Aktualizacji:** Dwie wiadomości z tym samym kluczem → strumień emituje najpierw „nowy” wpis, potem „aktualizację”.
