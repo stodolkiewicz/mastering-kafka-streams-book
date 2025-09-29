@@ -48,7 +48,7 @@ https://kafka.apache.org/documentation/streams/developer-guide/dsl-api.html
 - **Zachowanie Klucza:** Grupowanie zachowuje istniejący klucz rekordu.
 - **Przygotowanie do Agregacji:** Umożliwia operacje jak count(), reduce(), aggregate().
 
-### `groupBy` ❌ TODO
+### `groupBy` ✅ DONE
 - **Nowy Klucz:** Grupowanie na podstawie nowego klucza z wartości.
 - **Repartitioning:** Automatyczne repartitioning gdy klucz się zmienia.
 
@@ -58,7 +58,7 @@ https://kafka.apache.org/documentation/streams/developer-guide/dsl-api.html
 - **Inkrementacja:** Kolejne wiadomości dla tego samego klucza poprawnie zwiększają licznik.
 - **Niezależność Kluczy:** Liczniki dla różnych kluczy są od siebie niezależne.
 
-### `reduce` ❌ TODO
+### `reduce` ✅ DONE
 - **Inicjalizacja:** Pierwsza wiadomość poprawnie inicjuje stan agregacji.
 - **Redukcja:** Kolejne wiadomości poprawnie modyfikują stan zgodnie z logiką Reducer.
 
