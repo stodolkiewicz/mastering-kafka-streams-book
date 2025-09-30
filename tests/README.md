@@ -62,7 +62,7 @@ https://kafka.apache.org/documentation/streams/developer-guide/dsl-api.html
 - **Inicjalizacja:** Pierwsza wiadomość poprawnie inicjuje stan agregacji.
 - **Redukcja:** Kolejne wiadomości poprawnie modyfikują stan zgodnie z logiką Reducer.
 
-### `aggregate` ❌ TODO
+### `aggregate` ✅ DONE
 - **Initializer:** Pierwsza wiadomość dla klucza poprawnie wywołuje Initializer.
 - **Aggregator:** Kolejne wiadomości poprawnie aktualizują agregat za pomocą Aggregator.
 

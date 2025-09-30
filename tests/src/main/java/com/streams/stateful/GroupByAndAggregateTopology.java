@@ -100,7 +100,10 @@ public class GroupByAndAggregateTopology {
         KTable<String, CustomerOrderSummary> customerOrderSummaryKTable = streamGroupedByCustomerId.aggregate(
                 aggregateInitializer,
                 aggregator,
-                Materialized.<String, CustomerOrderSummary, KeyValueStore<Bytes, byte[]>>as("customer-order-summary-store")
+                Materialized.<String, CustomerOrderSummary, KeyValueStore<Bytes, byte[]>>
+                        as("customer-order-summary-store")
+                        .withKeySerde(Serdes.String())
+                        .withValueSerde(new JsonSerDes<>(CustomerOrderSummary.class))
         );
 
         // Convert KTable changelog to KStream and output to topic
