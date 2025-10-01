@@ -72,7 +72,11 @@ https://kafka.apache.org/documentation/streams/developer-guide/dsl-api.html
 **Cel:** Weryfikacja, czy operacje stanowe działają poprawnie w granicach czasowych.  
 Kluczowe jest użycie `TopologyTestDriver.advanceWallClockTime()` do symulowania upływu czasu.
 
-### Testy Ogólne (dla każdego typu okna: Tumbling, Hopping, Session)
+### Testy Ogólne (dla każdego typu okna: Tumbling, Hopping, Session, Sliding)
+#### Tumbling ✅ DONE
+#### Hopping ❌ TODO
+#### Session ❌ TODO
+#### Sliding ❌ TODO
 - **Wiadomości w Jednym Oknie:** Grupa wiadomości z bliskimi timestampami jest agregowana w jednym oknie.
 - **Wiadomości na Granicy Okien:** Dwie wiadomości po przeciwnych stronach granicy okna trafiają do dwóch różnych okien.
 - **Wiadomości Nieuporządkowane (Out-of-Order):** Wiadomość ze starszym timestampem, ale wciąż w ramach otwartego okna, jest poprawnie uwzględniana.
@@ -84,7 +88,7 @@ Kluczowe jest użycie `TopologyTestDriver.advanceWallClockTime()` do symulowania
     - **Tworzenie Sesji:** Wiadomości w bliskim odstępie czasu tworzą jedną sesję; wiadomość po dłuższej przerwie (inactivity gap) tworzy nową sesję.
     - **Łączenie Sesji:** Dwie oddzielne sesje są poprawnie łączone w jedną, gdy pojawi się wiadomość „pomostowa” między nimi.
 
-### Operator `suppress`
+### Operator `suppress` ✅ DONE
 - **Emisja po Zamknięciu Okna:** Wynik agregacji jest emitowany z KTable dopiero po przesunięciu czasu strumienia (`advanceWallClockTime`) za koniec okna + grace period.
 - **Brak Emisji Pośrednich:** Żadne pośrednie wyniki nie są emitowane przed zamknięciem okna.
 

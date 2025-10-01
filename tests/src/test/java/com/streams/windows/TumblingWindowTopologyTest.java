@@ -32,7 +32,7 @@ class TumblingWindowTopologyTest {
     void setup() {
         Properties props = new Properties();
         // Unique APPLICATION_ID per test to avoid state pollution
-        props.put(StreamsConfig.APPLICATION_ID_CONFIG, "tumblingWindowApp-" + System.currentTimeMillis());
+        props.put(StreamsConfig.APPLICATION_ID_CONFIG, "tumblingWindowApp");
         props.put(StreamsConfig.BOOTSTRAP_SERVERS_CONFIG, "dummy-123");
 
         Topology topology = TumblingWindowTopology.createTumblingWindowTopology();

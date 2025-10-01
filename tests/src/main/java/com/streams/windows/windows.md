@@ -1,5 +1,6 @@
 # Kafka Streams Windows
 
+--------------------------------------------------------------------
 ## Kafka Record Structure
 
 Every Kafka record has:
@@ -7,7 +8,8 @@ Every Kafka record has:
 - `value` (payload/message content)  
 - `timestamp` (this field is used by Kafka Streams)
 - `headers` (various metadata, but not timestamp)
-
+- 
+--------------------------------------------------------------------
 ## Time Types
 
 ### Event Time
@@ -28,10 +30,16 @@ When the stream processing application processes the record.
 ### Ingestion Time
 When the record reached Kafka broker.  
 
+--------------------------------------------------------------------
 ## Tumbling Windows
 A series of fixed-size windows which do not overlap.
 
 Fixed-size, non-overlapping windows: [0-60), [60-120), [120-180)...
+
+Example:
+- Window [0-60s), grace 20s
+- Record with event time 30s arriving at processing time 70s → accepted
+- Record with event time 30s arriving after 80s → dropped
 
 **Grace Period** - extra time to accept late records (but with event time within the window) after window closes
 
@@ -39,7 +47,36 @@ Fixed-size, non-overlapping windows: [0-60), [60-120), [120-180)...
 
 **Wall Clock Time** - real system time (like System.currentTimeMillis()). Used to determine when windows close, grace periods end, punctuations trigger. In tests, controlled by `testDriver.advanceWallClockTime()`
 
-Example:
-- Window [0-60s), grace 20s
-- Record with event time 30s arriving at processing time 70s → accepted
-- Record with event time 30s arriving after 80s → dropped
+--------------------------------------------------------------------
+## Suppression
+
+**Purpose** - control when windowed results are emitted to downstream operators.
+
+**Default behavior** - Kafka Streams emits results immediately as records arrive and get aggregated.
+
+**With suppression** - delay emission until specific conditions are met.
+
+### Suppression Options
+
+**untilWindowCloses()** - emit only after window closes (after grace period)
+```java
+.suppress(Suppressed.untilWindowCloses(Suppressed.BufferConfig.unbounded()))
+```
+
+**untilTimeLimit()** - emit after specified time passes since first record in window
+```java
+.suppress(Suppressed.untilTimeLimit(Duration.ofSeconds(30), Suppressed.BufferConfig.unbounded()))
+```
+
+### Buffer Configuration
+
+**unbounded()** - no limit on memory usage (can cause OOM)  
+**maxRecords(int)** - limit number of records buffered per key  
+**maxBytes(long)** - limit memory usage in bytes  
+
+### Use Cases
+
+- **Final results only** - when you only want complete window results
+- **Reduce downstream load** - fewer intermediate updates
+- **Batch processing** - collect all window data before processing
+--------------------------------------------------------------------
