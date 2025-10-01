@@ -29,10 +29,15 @@ When the stream processing application processes the record.
 When the record reached Kafka broker.  
 
 ## Tumbling Windows
+A series of fixed-size windows which do not overlap.
 
 Fixed-size, non-overlapping windows: [0-60), [60-120), [120-180)...
 
 **Grace Period** - extra time to accept late records (but with event time within the window) after window closes
+
+**Result Emission** - by default, Kafka Streams emits results as records arrive (controlled by commit.interval.ms, cache.max.bytes.buffering, linger.ms), not when window closes. To emit only after window closes, use `.suppress(Suppressed.untilWindowCloses())`
+
+**Wall Clock Time** - real system time (like System.currentTimeMillis()). Used to determine when windows close, grace periods end, punctuations trigger. In tests, controlled by `testDriver.advanceWallClockTime()`
 
 Example:
 - Window [0-60s), grace 20s

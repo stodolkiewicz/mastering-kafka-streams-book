@@ -174,4 +174,16 @@ Te testy uczą interakcji z niższymi warstwami API i semantyki platformy.
 - **StreamUncaughtExceptionHandler:** własny handler błędów.
 - **Test:** Operator (np. `mapValues`) celowo rzuca wyjątek dla danej wiadomości.
     - Handler jest wywołany.
-    - Aplikacja albo kontynuuje (`REPLACE_THREAD` / `CONTINUE`), albo zatrzymuje się (`SHUTDOWN_CLIENT`).  
+    - Aplikacja albo kontynuuje (`REPLACE_THREAD` / `CONTINUE`), albo zatrzymuje się (`SHUTDOWN_CLIENT`).
+
+---
+
+## VII. Materialized State Store Configuration
+
+### Caching
+- `.withCachingEnabled()` - Włącza cache w pamięci dla szybszego dostępu
+- `.withCachingDisabled()` - Wyłącza cache w pamięci
+
+### Changelog
+- `.withLoggingEnabled(config)` - Włącza zapis do changelog topicu w Kafce (dla odporności na awarie)
+- `.withLoggingDisabled()` - Wyłącza zapis do changelog topicu  
