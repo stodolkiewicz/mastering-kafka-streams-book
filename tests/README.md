@@ -94,28 +94,7 @@ Kluczowe jest użycie `TopologyTestDriver.advanceWallClockTime()` do symulowania
 
 ---
 
-## IV. KTable i GlobalKTable
-**Cel:** Zrozumienie abstrakcji tabeli jako strumienia zmian i globalnego stanu.
-
-### KTable ❌ TODO
-- **Upsert Semantics:** Nowy rekord z tym samym kluczem nadpisuje poprzedni.
-- **Tombstone Handling:** null value usuwa klucz z tabeli.
-- **toStream():** Konwersja KTable → KStream emituje changelog events.
-- **State Query:** Odczyt aktualnego stanu przez getStateStore().
-
-### GlobalKTable ❌ TODO  
-- **Full Replication:** Każda instancja aplikacji ma pełną kopię danych.
-- **No Partitioning:** Nie ma ograniczeń co-partitioning dla joinów.
-- **Bootstrap:** Tabela jest w pełni załadowana przed rozpoczęciem przetwarzania.
-- **Join with Any Key:** Join KStream z GlobalKTable na dowolnym kluczu.
-
-### KTable Operations ❌ TODO
-- **filter():** Filtrowanie rekordów w tabeli.
-- **mapValues():** Transformacja wartości w tabeli.
-- **join():** KTable-KTable join (inner/left/outer).
-- **aggregate():** Agregacja wartości grupowanych kluczy.
-
----
+## IV. KTable vs KStream ✅ DONE
 
 ## V. Złączenia (Joins)
 **Cel:** Weryfikacja logiki łączenia strumieni i wzbogacania danych, zarówno w oknach czasowych, jak i z tabelami.
