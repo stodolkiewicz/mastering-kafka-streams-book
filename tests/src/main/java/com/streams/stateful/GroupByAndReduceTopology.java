@@ -1,7 +1,7 @@
 package com.streams.stateful;
 
-import com.streams.model.MyModel;
-import com.streams.serde.JsonSerDes;
+import com.streams.common.model.MyModel;
+import com.streams.common.serde.JsonSerDes;
 import org.apache.kafka.common.serialization.Serdes;
 import org.apache.kafka.streams.StreamsBuilder;
 import org.apache.kafka.streams.Topology;

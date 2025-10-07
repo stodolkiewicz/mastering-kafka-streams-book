@@ -1,4 +1,4 @@
-package com.streams.serde;
+package com.streams.common.serde;
 
 import org.apache.kafka.common.serialization.Deserializer;
 import org.apache.kafka.common.serialization.Serde;

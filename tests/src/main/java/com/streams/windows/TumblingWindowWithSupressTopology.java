@@ -1,7 +1,7 @@
 package com.streams.windows;
 
-import com.streams.model.GameScoreEvent;
-import com.streams.serde.JsonSerDes;
+import com.streams.common.model.GameScoreEvent;
+import com.streams.common.serde.JsonSerDes;
 import org.apache.kafka.common.serialization.Serdes;
 import org.apache.kafka.common.utils.Bytes;
 import org.apache.kafka.streams.KeyValue;

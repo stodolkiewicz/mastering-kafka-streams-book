@@ -1,4 +1,4 @@
-package com.streams.model;
+package com.streams.common.model;
 
 public class CustomerOrderSummary {
     private String customerId;

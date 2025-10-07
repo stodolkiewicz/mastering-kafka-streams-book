@@ -1,6 +1,6 @@
 package com.streams.stateless.branching.dynamic;
 
-import com.streams.model.MyModel;
+import com.streams.common.model.MyModel;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.kafka.streams.processor.RecordContext;
 import org.apache.kafka.streams.processor.TopicNameExtractor;

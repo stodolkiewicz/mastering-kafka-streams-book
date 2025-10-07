@@ -1,8 +1,8 @@
 package com.streams.stateful;
 
-import com.streams.model.Order;
-import com.streams.model.CustomerOrderSummary;
-import com.streams.serde.JsonSerDes;
+import com.streams.common.model.Order;
+import com.streams.common.model.CustomerOrderSummary;
+import com.streams.common.serde.JsonSerDes;
 import org.apache.kafka.common.serialization.Serdes;
 import org.apache.kafka.common.utils.Bytes;
 import org.apache.kafka.streams.StreamsBuilder;

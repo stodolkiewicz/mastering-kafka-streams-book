@@ -170,3 +170,40 @@ Te testy uczą interakcji z niższymi warstwami API i semantyki platformy.
 ### Changelog
 - `.withLoggingEnabled(config)` - Włącza zapis do changelog topicu w Kafce (dla odporności na awarie)
 - `.withLoggingDisabled()` - Wyłącza zapis do changelog topicu  
+
+---
+
+## VIII. Dead Letter Topic Pattern
+
+**Cel:** Obsługa nieprawidłowych lub problematycznych wiadomości przez kierowanie ich do osobnego topicu błędów.
+
+### Podstawowy wzorzec
+```java
+// Filtrowanie nieprawidłowych rekordów
+KStream<String, Payment>[] branches = paymentStream.branch(
+    Named.as("payment-branches"),
+    (key, payment) -> payment != null && payment.getOrderId() != null,  // valid
+    (key, payment) -> true  // invalid (catch-all)
+);
+
+KStream<String, Payment> validPayments = branches[0];
+KStream<String, Payment> invalidPayments = branches[1];
+
+// Prawidłowe płatności → przetwarzanie
+validPayments.selectKey((key, payment) -> payment.getOrderId())
+    .to("processed-payments");
+
+// Nieprawidłowe płatności → error topic
+invalidPayments.to("error-payments-topic");
+```
+
+### Przypadki użycia
+- **Data Quality Monitoring** - Śledzenie ilości błędnych rekordów
+- **Error Recovery** - Możliwość ponownego przetworzenia po naprawie danych  
+- **Debugging** - Analiza przyczyn błędów w produkcji
+- **Alerting** - Powiadomienia o wzroście liczby błędów
+
+### Testy
+- **Valid Records** - Prawidłowe rekordy trafiają do głównego przetwarzania
+- **Invalid Records** - Nieprawidłowe rekordy trafiają do error topic
+- **Null Safety** - Obsługa null values bez crashu aplikacji

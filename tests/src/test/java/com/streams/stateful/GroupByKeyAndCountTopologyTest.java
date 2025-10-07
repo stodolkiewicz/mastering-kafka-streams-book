@@ -1,7 +1,7 @@
 package com.streams.stateful;
 
-import com.streams.model.MyModel;
-import com.streams.serde.JsonSerializer;
+import com.streams.common.model.MyModel;
+import com.streams.common.serde.JsonSerializer;
 import org.apache.kafka.common.serialization.Serdes;
 import org.apache.kafka.streams.*;
 import org.junit.jupiter.api.AfterEach;

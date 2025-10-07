@@ -1,9 +1,8 @@
 package com.streams.stateless;
 
-import com.streams.App;
-import com.streams.model.MyModel;
-import com.streams.serde.JsonDeserializer;
-import com.streams.serde.JsonSerializer;
+import com.streams.common.model.MyModel;
+import com.streams.common.serde.JsonDeserializer;
+import com.streams.common.serde.JsonSerializer;
 import org.apache.kafka.common.serialization.Serdes;
 import org.apache.kafka.streams.*;
 import org.junit.jupiter.api.AfterEach;
